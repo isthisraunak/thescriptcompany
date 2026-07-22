@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Script Company — A Screenplay Literary Magazine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --cream:#efeae1;
+    --cream-2:#e3ddd2;
+    --ink:#17140f;
+    --ink-soft:#3a352c;
+    --paper:#f4f1ea;
+    --line: rgba(23,20,15,0.18);
+    --line-soft: rgba(23,20,15,0.1);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'JetBrains Mono', monospace;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit; text-decoration:none;}
+
+  .serif{font-family:'Playfair Display', serif;}
+
+  /* ---------- NAV ---------- */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 48px;
+    border-bottom:1px solid var(--line-soft);
+    background:var(--cream);
+    position:relative;
+    z-index:10;
+  }
+  .brand{display:flex; flex-direction:column; line-height:1;}
+  .brand-name{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:26px;
+    letter-spacing:0.5px;
+  }
+  .brand-tag{
+    font-size:9px;
+    letter-spacing:2.5px;
+    color:var(--ink-soft);
+    margin-top:6px;
+  }
+  nav{display:flex; gap:34px; align-items:center;}
+  nav a{
+    font-size:12px;
+    letter-spacing:1.2px;
+    font-weight:500;
+    padding-bottom:6px;
+    border-bottom:2px solid transparent;
+    transition:border-color .2s ease;
+  }
+  nav a:hover{border-color:var(--line);}
+  nav a.active{border-color:var(--ink);}
+  .submit-btn{
+    background:var(--ink);
+    color:var(--cream);
+    padding:12px 26px;
+    font-size:12px;
+    letter-spacing:1.5px;
+    font-weight:600;
+    border:1px solid var(--ink);
+    transition:opacity .2s ease;
+    white-space:nowrap;
+  }
+  .submit-btn:hover{opacity:.85;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns:1fr 1.15fr;
+    min-height:560px;
+  }
+  .hero-left{
+    padding:80px 60px 60px 60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .hero-left h1{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:64px;
+    line-height:1.05;
+    letter-spacing:-0.5px;
+    margin-bottom:28px;
+  }
+  .hero-left p{
+    font-size:14px;
+    line-height:1.9;
+    color:var(--ink-soft);
+    max-width:340px;
+    margin-bottom:34px;
+  }
+  .outline-btn{
+    display:inline-block;
+    border:1px solid var(--ink);
+    padding:16px 28px;
+    font-size:12px;
+    letter-spacing:1.5px;
+    font-weight:600;
+    width:fit-content;
+    transition:background .2s ease, color .2s ease;
+  }
+  .outline-btn:hover{background:var(--ink); color:var(--cream);}
+
+  .hero-right{
+    position:relative;
+    background:var(--cream);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:60px;
+  }
+  .issue-card{
+    width:100%;
+    max-width:440px;
+  }
+  .issue-photo{
+    width:100%;
+    aspect-ratio:4/5;
+    border-radius:18px;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08), transparent 55%),
+      linear-gradient(155deg, #4a4640 0%, #2a2722 45%, #17140f 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 24px 50px rgba(23,20,15,0.22);
+    overflow:hidden;
+    position:relative;
+  }
+  .issue-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .issue-photo-label{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 30px;
+    font-size:11px;
+    letter-spacing:1.5px;
+    line-height:1.8;
+    color:rgba(239,234,225,0.5);
+    text-transform:uppercase;
+  }
+  .issue-photo-label small{
+    font-size:9px;
+    letter-spacing:0.8px;
+    text-transform:none;
+    color:rgba(239,234,225,0.35);
+  }
+  .issue-info{
+    margin-top:26px;
+  }
+  .issue-heading{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:10px;
+  }
+  .issue-title{
+    font-size:30px;
+    font-weight:600;
+  }
+  .issue-number{
+    font-size:20px;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+  .issue-theme{
+    font-size:12px;
+    letter-spacing:1.2px;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  .issue-theme strong{
+    color:var(--ink);
+    font-weight:700;
+  }
+  .issue-btn{
+    padding:14px 26px;
+  }
+  /* ---------- SUBMISSIONS BAR ---------- */
+  .sub-bar{
+    background:var(--ink);
+    color:var(--cream);
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:48px;
+    padding:44px 60px;
+  }
+  .sub-icon{
+    width:52px; height:52px;
+    border:1.5px solid rgba(239,234,225,0.7);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sub-mid h3{
+    font-family:'Playfair Display', serif;
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .sub-mid p{
+    font-size:13px;
+    line-height:1.8;
+    color:rgba(239,234,225,0.75);
+    max-width:340px;
+  }
+  .sub-right{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+  }
+  .sub-right .outline-btn{
+    border-color:rgba(239,234,225,0.8);
+    color:var(--cream);
+  }
+  .sub-right .outline-btn:hover{
+    background:var(--cream);
+    color:var(--ink);
+  }
+  .link-arrow{
+    font-size:12px;
+    letter-spacing:1px;
+    color:rgba(239,234,225,0.85);
+    border-bottom:1px solid rgba(239,234,225,0.4);
+    padding-bottom:2px;
+  }
+
+  /* ---------- FEATURED ---------- */
+  .featured-wrap{
+    display:grid;
+    grid-template-columns:1fr 300px;
+  }
+  .featured{
+    padding:70px 60px;
+    background:var(--paper);
+  }
+  .featured-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:44px;
+  }
+  .featured-head h2{
+    font-family:'Playfair Display', serif;
+    font-size:34px;
+    font-weight:600;
+  }
+  .view-all{
+    font-size:12px;
+    letter-spacing:1px;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+  }
+  .script-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:40px;
+  }
+  .script-card .eyebrow{
+    font-size:10.5px;
+    letter-spacing:1.5px;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .script-card h3{
+    font-family:'Playfair Display', serif;
+    font-size:22px;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .script-card .byline{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .script-card hr{
+    border:none;
+    border-top:1px solid var(--line);
+    width:26px;
+    margin-bottom:14px;
+  }
+  .script-card p{
+    font-size:12.5px;
+    line-height:1.85;
+    color:var(--ink-soft);
+    margin-bottom:20px;
+    min-height:65px;
+  }
+  .read-excerpt{
+    font-size:11.5px;
+    letter-spacing:1px;
+    font-weight:600;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:3px;
+  }
+
+  .about-side{
+    background:var(--cream-2);
+    padding:70px 44px;
+  }
+  .about-side h2{
+    font-family:'Playfair Display', serif;
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  .about-side hr{
+    border:none;
+    border-top:1px solid var(--line);
+    width:26px;
+    margin-bottom:22px;
+  }
+  .about-side p{
+    font-size:12.5px;
+    line-height:1.9;
+    color:var(--ink-soft);
+    margin-bottom:26px;
+  }
+  .learn-more{
+    font-size:11.5px;
+    letter-spacing:1px;
+    font-weight:600;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:3px;
+  }
+  .chair-icon{
+    margin-top:60px;
+    opacity:0.85;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    color:var(--cream);
+    padding:42px 60px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr auto;
+    gap:20px;
+    align-items:start;
+    font-size:12px;
+  }
+  .footer-copy p{ line-height:1.8; color:rgba(239,234,225,0.65); }
+  .footer-col a{
+    display:block;
+    color:rgba(239,234,225,0.8);
+    margin-bottom:12px;
+    letter-spacing:0.6px;
+  }
+  .footer-col a:hover{ color:var(--cream); }
+  .footer-social{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    justify-content:flex-end;
+  }
+  .footer-social svg{ width:18px; height:18px; }
+
+  @media(max-width:980px){
+    header{padding:18px 24px; flex-wrap:wrap; gap:16px;}
+    nav{display:none;}
+    .hero{grid-template-columns:1fr;}
+    .hero-left{padding:50px 28px;}
+    .hero-left h1{font-size:44px;}
+    .hero-right{padding:40px 28px 100px;}
+    .sub-bar{grid-template-columns:1fr; text-align:left; padding:36px 28px;}
+    .featured-wrap{grid-template-columns:1fr;}
+    .script-grid{grid-template-columns:1fr; gap:36px;}
+    .featured, .about-side{padding:50px 28px;}
+    footer{grid-template-columns:1fr 1fr; padding:36px 28px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="brand-name">The Script Company</span>
+    <span class="brand-tag">A SCREENPLAY LITERARY MAGAZINE</span>
+  </div>
+  <nav>
+    <a href="#" class="active">HOME</a>
+    <a href="#">ABOUT</a>
+    <a href="#">SUBMISSIONS</a>
+    <a href="#">PAST ISSUES</a>
+    <a href="#">READ</a>
+    <a href="#">BLOG</a>
+    <a href="#">CONTACT</a>
+  </nav>
+  <a href="#" class="submit-btn">SUBMIT</a>
+</header>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1 class="serif">Stories<br>in Script.</h1>
+    <p>The Script Company is a literary magazine celebrating the craft and art of the screenplay.</p>
+    <a href="#" class="outline-btn">READ CURRENT ISSUE</a>
+  </div>
+  <div class="hero-right">
+    <div class="issue-card">
+      <div class="issue-photo">
+        <img src="image_1_2_3.jpg" alt="Spring Issue #3 cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <span class="issue-photo-label">Cover photo goes here<br><small>(save your image as image_1_2_3.jpg in this folder)</small></span>
+      </div>
+      <div class="issue-info">
+        <div class="issue-heading">
+          <span class="issue-title serif">Spring Issue</span>
+          <span class="issue-number serif">#3</span>
+        </div>
+        <p class="issue-theme">THEME: <strong>GANGSTERS</strong></p>
+        <a href="#" class="outline-btn issue-btn">SEE THE ISSUE HERE</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sub-bar">
+  <div class="sub-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#efeae1" stroke-width="1.4">
+      <path d="M6 2h9l5 5v15H6z"/>
+      <path d="M15 2v5h5"/>
+      <path d="M9 12h6"/>
+      <path d="M9 15h6"/>
+      <path d="M9 18h3"/>
+    </svg>
+  </div>
+  <div class="sub-mid">
+    <h3 class="serif">Submissions Open</h3>
+    <p>We're always looking for bold voices and unflinching stories.</p>
+  </div>
+  <div class="sub-right">
+    <a href="#" class="outline-btn">SUBMIT YOUR SCRIPT</a>
+    <a href="#" class="link-arrow">Submission Guidelines →</a>
+  </div>
+</section>
+
+<div class="featured-wrap">
+  <section class="featured">
+    <div class="featured-head">
+      <h2 class="serif">Featured Scripts</h2>
+      <a href="#" class="view-all">VIEW ALL →</a>
+    </div>
+    <div class="script-grid">
+      <article class="script-card">
+        <div class="eyebrow">DRAMA</div>
+        <h3 class="serif">The Antennas</h3>
+        <div class="byline">By Lena Calder</div>
+        <hr>
+        <p>A young signal booster climbs a radio tower to broadcast a confession.</p>
+        <a href="#" class="read-excerpt">READ EXCERPT →</a>
+      </article>
+      <article class="script-card">
+        <div class="eyebrow">THRILLER</div>
+        <h3 class="serif">Southbound</h3>
+        <div class="byline">By Marcus Lee</div>
+        <hr>
+        <p>A ride-share driver picks up a passenger who isn't in the system.</p>
+        <a href="#" class="read-excerpt">READ EXCERPT →</a>
+      </article>
+      <article class="script-card">
+        <div class="eyebrow">COMEDY</div>
+        <h3 class="serif">Group Project</h3>
+        <div class="byline">By Priya Desai</div>
+        <hr>
+        <p>Four film students. One script deadline. Zero chance of everyone surviving.</p>
+        <a href="#" class="read-excerpt">READ EXCERPT →</a>
+      </article>
+    </div>
+  </section>
+
+  <aside class="about-side">
+    <h2 class="serif">About The Script Company</h2>
+    <hr>
+    <p>We publish screenplays that move us — works that explore character, story, and the endless possibilities of visual storytelling.</p>
+    <a href="#" class="learn-more">LEARN MORE →</a>
+    <div class="chair-icon">
+      <svg width="70" height="80" viewBox="0 0 70 80" fill="none" stroke="#17140f" stroke-width="1.2">
+        <path d="M14 20h42l-6 14H20z"/>
+        <path d="M20 34l-8 44"/>
+        <path d="M50 34l8 44"/>
+        <path d="M14 20l8 58"/>
+        <path d="M56 20l-8 58"/>
+        <path d="M13 55h44"/>
+      </svg>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-copy">
+    <p>© 2026 THE SCRIPT COMPANY<br>All rights reserved.</p>
+  </div>
+  <div class="footer-col">
+    <a href="#">ABOUT</a>
+    <a href="#">SUBMISSIONS</a>
+    <a href="#">PAST ISSUES</a>
+  </div>
+  <div class="footer-col">
+    <a href="#">READ</a>
+    <a href="#">BLOG</a>
+    <a href="#">CONTACT</a>
+  </div>
+  <div class="footer-social">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#efeae1" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+    <svg viewBox="0 0 24 24" fill="#efeae1"><path d="M23 4.9c-.8.4-1.7.6-2.6.8.9-.6 1.6-1.5 2-2.5-.9.5-1.9.9-2.9 1.1a4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 2.7 3.6a4.5 4.5 0 0 0 1.4 6 4.4 4.4 0 0 1-2-.6v.1c0 2.2 1.6 4 3.6 4.4-.6.2-1.3.2-1.9.1a4.5 4.5 0 0 0 4.2 3.1A9 9 0 0 1 1 18.6a12.8 12.8 0 0 0 6.9 2c8.3 0 12.8-6.9 12.8-12.8v-.6c.9-.6 1.6-1.4 2.3-2.3z"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="#efeae1" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7L22 6"/></svg>
+  </div>
+</footer>
+
+</body>
+</html>
